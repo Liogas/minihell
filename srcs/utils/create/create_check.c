@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:21:37 by glions            #+#    #+#             */
-/*   Updated: 2024/07/16 15:28:18 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 16:07:48 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ t_check	*create_check(void)
 	new->line_cmd = NULL;
 	new->paths = NULL;
 	new->redirct = NULL;
-	// new->bltn = init_builtins();
-	// if (!new->bltn)
-		// return (free(new), NULL);
 	if (!init_oprt_redirct(&new->oprt, &new->redirct))
 		return (free_check(new), NULL);
 	new->paths = init_paths();

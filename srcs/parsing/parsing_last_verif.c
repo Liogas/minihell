@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:03:10 by glions            #+#    #+#             */
-/*   Updated: 2024/07/16 15:41:35 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 10:52:35 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	last_verif_operator(t_dt_elem *next)
 		next = next->next;
 	if (!next)
 		return (0);
-	else if (next->type == BLOCK || type_is_redir(next->type)
+	else if (type_is_redir(next->type)
 		|| type_accept_for_quote(next->type))
 		return (1);
 	return (0);
@@ -44,12 +44,7 @@ static int	parsing_remove_whitespace(t_dt_elem **tokens, t_dt_elem *tmp,
 	while (token)
 	{
 		tmp = NULL;
-		if (token->type == BLOCK)
-		{
-			if (parsing_remove_whitespace(&token->content, tmp, token) == 0)
-				return (0);
-		}
-		else if (token->type == WHITE_SPACE)
+		if (token->type == WHITE_SPACE)
 		{
 			tmp = token->next;
 			if (remove_dt_elem(tokens, &token) == 0)

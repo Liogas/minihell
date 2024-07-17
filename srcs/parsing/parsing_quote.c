@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:53:04 by glions            #+#    #+#             */
-/*   Updated: 2024/06/26 12:30:27 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 10:52:00 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	has_job(t_dt_elem *token)
 {
 	while (token)
 	{
-		if (token->type == CALCUL || token->type == ENV || token->type == WORD)
+		if (token->type == ENV || token->type == WORD)
 			return (1);
 		else if (type_is_quote(token->type))
 			token = token->next;

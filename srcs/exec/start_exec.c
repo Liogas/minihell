@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:51:29 by glions            #+#    #+#             */
-/*   Updated: 2024/07/16 15:04:34 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 13:52:53 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 int	start_exec(t_minish *dt_minish)
 {
-	t_process	*main_process;
+	t_cmd		*cmd;
+	t_cmd		*head;
 
-	main_process = create_process(dt_minish->check->bltn, dt_minish->env_minish,
-			NULL);
-	if (!main_process)
+	if (!init_cmd(&dt_minish->block_token, &cmd))
 		return (0);
-	if (!start_process(dt_minish->block_token, main_process, dt_minish, 0))
-		return (close_process(main_process, dt_minish, 0, 1),
-			free_process(&main_process, 0), 0);
-	close_process(main_process, dt_minish, 0, 1);
-	wait_all_pid(main_process);
-	free_process(&main_process, 0);
+	if (!exec_cmd(cmd, dt_minish))
+		return (free_cmd(cmd), 0);
+	head = cmd;
+	close_tab_pipes(cmd);
+	while (cmd)
+	{
+		waitpid(cmd->pid, &dt_minish->status, 0);
+		printf("La commande[%d], s'est terminee avec comme status->%d\n", cmd->pid, dt_minish->status);
+		cmd = cmd->next;
+	}
+	free_cmd(head);
 	return (1);
 }

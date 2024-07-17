@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 03:00:34 by glions            #+#    #+#             */
-/*   Updated: 2024/07/15 18:12:58 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 16:19:03 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static void	free_redir(t_redir *redir)
 		next = redir->next;
 		if (redir->name_file)
 			free(redir->name_file);
+		if (redir->name_heredoc)
+			free(redir->name_heredoc);
 		free(redir);
 		redir = next;
 	}
@@ -50,12 +52,10 @@ void	free_cmd(void *param)
 			free_redir(dt->list_redirc);
 		if (dt->tab_opt)
 			ft_split_free(dt->tab_opt);
-		if (dt->pipe_out)
-			free(dt->pipe_out);
-		if (dt->utils.close_in && dt->pipe_in)
-			free(dt->pipe_in);
 		if (dt->tab_pipes && n == 1)
 			free_tab_pipes(&dt->tab_pipes, dt->utils.n_pipe);
+		if (dt->tab_fd)
+			free_fd(dt);
 		if (dt->next)
 			free_cmd(dt->next);
 		else

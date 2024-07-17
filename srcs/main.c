@@ -6,11 +6,12 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 11:12:23 by glions            #+#    #+#             */
-/*   Updated: 2024/07/16 15:11:11 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 11:10:48 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+/*cat Makefile | grep SRC | wc -l | cat*/
 
 int	start_minish(t_minish *dt)
 {
@@ -20,12 +21,9 @@ int	start_minish(t_minish *dt)
 		add_history(dt->check->line_cmd);
 		if (parsing(dt) == 0)
 			ft_putstr_fd("Error syntax\n", 2);
-		// else
-		// {
-		// 	// print_dt_elem(dt->block_token);
-		// 	if (start_exec(dt) == 0)
-		// 		return (free_minish(dt), printf("error start_exec\n"), 1);
-		// }
+		else
+			if (start_exec(dt) == 0)
+				return (free_minish(dt), printf("error start_exec\n"), 1);
 		if (dt->block_token)
 			free_dt_elem(&dt->block_token);
 		dt->block_token = NULL;

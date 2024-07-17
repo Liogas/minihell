@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:42 by glions            #+#    #+#             */
-/*   Updated: 2024/06/25 12:26:54 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 10:52:57 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	type_is_redir(enum e_type type)
 
 int	type_is_operator(enum e_type type)
 {
-	if (type == PIPE_LINE || type == OR || type == AND)
+	if (type == PIPE_LINE)
 		return (1);
 	return (0);
 }
@@ -36,7 +36,7 @@ int	type_is_quote(enum e_type type)
 
 int	type_accept_for_quote(enum e_type type)
 {
-	if (type == CALCUL || type == WORD || type == ENV || type_is_quote(type))
+	if (type == WORD || type == ENV || type_is_quote(type))
 		return (1);
 	return (0);
 }

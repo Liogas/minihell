@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:46:36 by glions            #+#    #+#             */
-/*   Updated: 2024/06/10 12:00:20 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 16:08:05 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	free_check(t_check	*dt)
 {
 	if (dt)
 	{
-		if (dt->bltn)
-			free(dt->bltn);
 		if (dt->paths)
 			ft_split_free(dt->paths);
 		if (dt->redirct)

@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:02:37 by glions            #+#    #+#             */
-/*   Updated: 2024/07/09 10:29:38 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 11:07:01 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_minish	*create_minish(char **envp)
 	if (!new->env_minish)
 		return (free(new), NULL);
 	new->check = create_check();
+	new->status = 0;
 	if (!new->check)
 		return (free(new), NULL);
 	return (new);

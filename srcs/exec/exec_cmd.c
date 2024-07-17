@@ -6,23 +6,23 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:29:39 by lbegliom          #+#    #+#             */
-/*   Updated: 2024/07/16 13:15:56 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 16:12:21 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int which_process(t_cmd *curr_cmd, t_process *curr_p, t_minish *dt)
+int which_process(t_cmd *curr_cmd, t_minish *dt)
 {
 	if (curr_cmd->id == 0)
-		return (child_process1(curr_cmd, curr_p, dt));
+		return (child_process1(curr_cmd, dt));
 	else if (curr_cmd->id == curr_cmd->utils.n_cmd - 1)
-		return (child_process3(curr_cmd, curr_p, dt));
+		return (child_process3(curr_cmd, dt));
 	else
-		return (child_process2(curr_cmd, curr_p, dt));
+		return (child_process2(curr_cmd, dt));
 }
 
-int exec_line(t_cmd *cmd, t_process *curr_p, t_minish *dt)
+int exec_line(t_cmd *cmd, t_minish *dt)
 {
 	int		i;
 	int		heredoc;
@@ -40,8 +40,11 @@ int exec_line(t_cmd *cmd, t_process *curr_p, t_minish *dt)
 			return (perror("de fork"), 0);
 		else if (cmd->pid == 0)
 		{
-			which_process(cmd, curr_p, dt);
-			(close_process(curr_p, dt, 1, 1), free_process(&curr_p, 1), free_minish(dt), exit(EXIT_FAILURE));
+			which_process(cmd, dt);
+			close_tab_pipes(cmd);
+			free_cmd(cmd);
+			free_minish(dt);
+			exit(EXIT_FAILURE);
 		}
 		cmd = cmd->next;
 		i++;
@@ -65,29 +68,29 @@ void	add_pipes(t_cmd **cmd)
 	}
 }
 
-int	exec_with_pipes(t_cmd *cmd, t_process *curr_p, t_minish *dt)
+int	exec_with_pipes(t_cmd *cmd, t_minish *dt)
 {
 	cmd->tab_pipes = init_tab_pipes(cmd->utils.n_pipe, &cmd->tab_pipes);
 	if (!cmd->tab_pipes)
 		return (0);
 	add_pipes(&cmd);
-	if (!exec_line(cmd, curr_p, dt))
+	if (!exec_line(cmd, dt))
 		return (0);
 	return (1);
 }
 
-int	exec_cmd(t_cmd *cmd, t_process *curr_p, t_minish *dt)
+int	exec_cmd(t_cmd *cmd, t_minish *dt)
 {
 
 	cmd->utils.n_pipe = count_pipe(cmd, &cmd->utils.n_pipe);
 	cmd->utils.n_cmd = nb_cmd(cmd);
 	if (cmd->utils.n_pipe != 0)
 	{
-		if (!exec_with_pipes(cmd, curr_p, dt))
+		if (!exec_with_pipes(cmd, dt))
 			return (0);
 	}
 	else
-		if (!exec_simple_cmd(cmd, curr_p, dt))
+		if (!exec_simple_cmd(cmd, dt))
 			return (0);
 	return (1);
 }

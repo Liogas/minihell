@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:19:24 by lbegliom          #+#    #+#             */
-/*   Updated: 2024/07/16 13:25:21 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 15:00:40 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	get_heredoc(t_redir *curr, int i)
 
 	new1 = ft_itoa(i);
 	curr->name_heredoc = ft_strjoin(".heredoc_tmp", new1);
+	free(new1);
 	if (!curr->name_heredoc)
 		return (0);
 	curr->fd_heredoc = open(curr->name_heredoc, O_WRONLY | O_CREAT | O_TRUNC,
@@ -59,7 +60,8 @@ int	get_heredoc(t_redir *curr, int i)
 		free(prompt);
 		prompt = readline("> ");
 	}
-	free(prompt);
+	if (prompt)
+		free(prompt);
 	close(curr->fd_heredoc);
 	return (1);
 }

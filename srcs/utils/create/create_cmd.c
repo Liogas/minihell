@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:51:47 by glions            #+#    #+#             */
-/*   Updated: 2024/07/15 18:49:06 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/17 16:14:45 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	add_redir(t_cmd **cmd, t_dt_elem **redir, t_dt_elem *file)
 	if (!new->name_file)
 		return (free(new), 0);
 	new->next = NULL;
+	new->name_heredoc = NULL;
+	new->fd_heredoc = -1;
 	tmp = (*cmd)->list_redirc;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
@@ -81,7 +83,6 @@ static int	add_opt_redir(t_dt_elem	**start, t_cmd **new_c)
 
 static void	init_utils(t_cmd *cmd)
 {
-	cmd->utils.close_in = 0;
 	cmd->utils.n_cmd = 0;
 	cmd->utils.n_pipe = 0;
 }
@@ -101,9 +102,9 @@ t_cmd   *create_cmd(t_dt_elem **start)
 	if (!add_opt_redir(start, &cmd))
 		return (free_cmd(cmd), NULL);
 	cmd->tab_pipes = NULL;
-    cmd->pipe_in = NULL;
-    cmd->pipe_out = NULL;	
 	cmd->next = NULL;
+	cmd->pos_cmd = 0;
+	cmd->tab_fd = NULL;
 	init_utils(cmd);
 	return (cmd);
 }

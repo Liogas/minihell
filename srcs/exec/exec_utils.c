@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbegliom <lbegliom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:51:28 by lbegliom          #+#    #+#             */
-/*   Updated: 2024/07/11 12:54:36 by lbegliom         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:21:53 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,24 @@ int	nb_cmd(t_cmd *cmd)
 	return (size);
 }
 
-int	**init_tab_fd(t_cmd *curr_cmd, int ***fd)
+int	init_tab_fd(t_cmd *curr_cmd)
 {
 	int	n_redirc;
 	int	i;
 
 	i = 0;
 	n_redirc = count_redirc(curr_cmd->list_redirc);
-	*fd = malloc(sizeof(int *) * n_redirc);
-	if (!*fd)
-		return (NULL);
+	curr_cmd->tab_fd = malloc(sizeof(int *) * n_redirc);
+	if (!curr_cmd->tab_fd)
+		return (0);
 	while (i < n_redirc)
 	{
-		(*fd)[i] = malloc(sizeof(int));
-		if (!(*fd)[i])
+		curr_cmd->tab_fd[i] = malloc(sizeof(int));
+		if (!curr_cmd->tab_fd[i])
 			return (0);
 		i++;
 	}
-	return (*fd);
+	return (1);
 }
 
 int	**init_tab_pipes(int n_pipe, int ***tab)
@@ -98,21 +98,3 @@ int	**init_tab_pipes(int n_pipe, int ***tab)
 	}
 	return (*tab);
 }
-
-// pid_t	**init_tab_fork(pid_t ***f, int n_cmd)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	*f = malloc(sizeof(pid_t *) * n_cmd);
-// 	if (!*f)
-// 		return (NULL);
-// 	while (i < n_cmd)
-// 	{
-// 		(*f)[i] = malloc(sizeof(pid_t));
-// 		if (!(*f)[i])
-// 			return (NULL);
-// 		i++;
-// 	}
-// 	return (*f);
-// }
