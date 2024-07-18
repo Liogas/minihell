@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:07:18 by lbegliom          #+#    #+#             */
-/*   Updated: 2024/07/17 16:19:52 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 12:03:15 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,31 @@ int	get_redir_out(int **fd, int i, t_redir *curr_redir)
 int	get_redir(t_cmd *curr_cmd, int *n_redir_out, int *n_redir_in)
 {
 	int	i;
+	t_redir	*redir;
 
 	i = 0;
 	if (!init_tab_fd(curr_cmd))
 		return (0);
 	if (!curr_cmd->tab_fd)
 		return (0);
-	while (curr_cmd->list_redirc)
+	redir = curr_cmd->list_redirc;
+	while (redir)
 	{
-		if (curr_cmd->list_redirc->type == REDIR_IN
-			|| curr_cmd->list_redirc->type == HERE_DOC_IN)
+		if (redir->type == REDIR_IN
+			|| redir->type == HERE_DOC_IN)
 		{
-			if (!get_redir_in(curr_cmd->tab_fd, i, curr_cmd->list_redirc))
+			if (!get_redir_in(curr_cmd->tab_fd, i, redir))
 				return (0);
 			(*n_redir_in)++;
 		}
-		else if (curr_cmd->list_redirc->type == REDIR_OUT
-			|| curr_cmd->list_redirc->type == HERE_DOC_OUT)
+		else if (redir->type == REDIR_OUT
+			|| redir->type == HERE_DOC_OUT)
 		{
-			if (!get_redir_out(curr_cmd->tab_fd, i, curr_cmd->list_redirc))
+			if (!get_redir_out(curr_cmd->tab_fd, i, redir))
 				return (0);
 			(*n_redir_out)++;
 		}
-		curr_cmd->list_redirc = curr_cmd->list_redirc->next;
+		redir = redir->next;
 		i++;
 	}
 	return (1);

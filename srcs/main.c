@@ -6,14 +6,13 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 11:12:23 by glions            #+#    #+#             */
-/*   Updated: 2024/07/17 11:10:48 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:42:26 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*cat Makefile | grep SRC | wc -l | cat*/
 
-int	start_minish(t_minish *dt)
+static int	start_minish(t_minish *dt)
 {
 	dt->check->line_cmd = readline("minihell 😈 > ");
 	while (dt->check->line_cmd && ft_strcmp(dt->check->line_cmd, "exit") != 0)
@@ -34,9 +33,12 @@ int	start_minish(t_minish *dt)
 	return (0);
 }
 
+// SIGABRT CTRL-\
+// SIGINT CTRL-C
+
 int	main(int ac, char **av, char **envp)
 {
-	t_minish	*dt_minish;
+	t_minish			*dt_minish;
 
 	(void)av;
 	if (ac != 1)

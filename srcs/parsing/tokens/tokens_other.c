@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 10:25:01 by glions            #+#    #+#             */
-/*   Updated: 2024/07/16 15:58:42 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 16:00:10 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,15 @@ int	token_word(char *str, t_dt_elem **token, t_check *check, int *j)
 			break ;
 		if (str[k + *j] == '$')
 			d = 1;
-		else if (d && isalnum(str[k + *j]) == 0)
-			return (0);
+		else if (d && is_white(k + *j))
+			d = 0;
+		else if (d && isalnum(str[k + *j]) == 0 && str[k + *j] != '?')
+			return (printf("ERROR 7\n"), 0);
 		k++;
 	}
 	*token = create_dt_elem(ft_strndup(str + *j, k), WORD, check->curr_state);
 	if (!*token)
-		return (0);
+		return (printf("ERROR 8\n"), 0);
 	*j += k - 1;
 	return (1);
 }

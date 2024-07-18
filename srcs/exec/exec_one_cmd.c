@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 13:35:54 by lbegliom          #+#    #+#             */
-/*   Updated: 2024/07/17 16:20:24 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 12:10:18 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int	get_all_redir(int **fd, t_redir *redir, int i)
 	return (1);
 }
 
-char *get_path(t_cmd *cmd, t_minish *dt)
+char	*get_path(t_cmd *cmd, t_minish *dt)
 {
-	int	i;
+	int		i;
 	char	*tmp;
 
 	i = 0;
@@ -110,20 +110,24 @@ int	one_child(t_cmd *cmd, t_minish *dt)
 	}
 	if (!close_tmp_file(cmd))
 		return (0);
+	if (!cmd->tab_opt[0])
+		(close_tab_pipes(cmd), free_cmd(cmd), free_minish(dt),
+			exit(EXIT_SUCCESS));
 	path = get_path(cmd, dt);
 	if (!path)
-		return (ft_putstr_fd(cmd->tab_opt[cmd->pos_cmd], 2), ft_putstr_fd(": CMD not found\n", 2), 0);
+		return (ft_putstr_fd(cmd->tab_opt[cmd->pos_cmd], 2),
+			ft_putstr_fd(": CMD not found\n", 2), 0);
 	env = gen_env(dt->env_minish);
 	if (!env)
 		return (ft_putstr_fd("Gen env failed\n", 2), 0);
-	if (execve(path, cmd->tab_opt, (char *const *)env) == -1) 
+	if (execve(path, cmd->tab_opt, (char *const *)env) == -1)
 		return (perror("execve"), 0);
 	return (1);
 }
 
-int exec_simple_cmd(t_cmd *cmd, t_minish *dt)
+int	exec_simple_cmd(t_cmd *cmd, t_minish *dt)
 {
-	int		heredoc;
+	int	heredoc;
 
 	heredoc = check_if_heredoc(cmd);
 	if (heredoc != 0)

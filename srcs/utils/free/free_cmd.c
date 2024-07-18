@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 03:00:34 by glions            #+#    #+#             */
-/*   Updated: 2024/07/17 16:19:03 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 12:09:50 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	free_cmd(void *param)
 	dt = param;
 	if (dt)
 	{
+		if (dt->tab_fd)
+			free_fd(dt);
 		if (dt->list_redirc)
 			free_redir(dt->list_redirc);
 		if (dt->tab_opt)
 			ft_split_free(dt->tab_opt);
 		if (dt->tab_pipes && n == 1)
 			free_tab_pipes(&dt->tab_pipes, dt->utils.n_pipe);
-		if (dt->tab_fd)
-			free_fd(dt);
 		if (dt->next)
 			free_cmd(dt->next);
 		else

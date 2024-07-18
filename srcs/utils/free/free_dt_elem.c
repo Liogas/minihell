@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:41:12 by lbegliom          #+#    #+#             */
-/*   Updated: 2024/07/07 02:36:56 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 11:01:07 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ void	free_dt_elem(t_dt_elem **elem)
 	while (dt)
 	{
 		tmp = dt->next;
-		if (dt->content)
-			free_dt_elem(&dt->content);
-		if (dt->value && dt->type != ENV)
+		if (dt->value)
 		{
 			free(dt->value);
 			dt->value = NULL;

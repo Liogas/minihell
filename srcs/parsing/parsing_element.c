@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 11:54:07 by glions            #+#    #+#             */
-/*   Updated: 2024/07/16 15:44:02 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:53:33 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static int	new_cmd2(char *str, t_check *check, int *j, t_dt_elem **token)
 	else if (is_white(str[*j]) == 1)
 	{
 		if (token_whitespace(str, token, check, *j) == 0)
-			return (0);
+			return (printf("ERROR 5\n"), 0);
 	}
 	else
 	{
 		if (token_word(str, token, check, j) == 0)
-			return (0);
+			return (printf("ERROR 6\n"),0);
 	}
 	return (1);
 }

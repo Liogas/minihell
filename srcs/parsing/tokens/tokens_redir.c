@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:51:37 by glions            #+#    #+#             */
-/*   Updated: 2024/07/15 16:18:59 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 12:08:33 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int	token_out_append(t_dt_elem **token, t_check *check, char *str,
 	if (!*token)
 		return (0);
 	(*j)++;
-	printf("dddd");
 	return (1);
 }
 
@@ -74,7 +73,6 @@ static int	token_out(t_dt_elem **token, t_check *check, char *str)
 
 int	tokens_redir(char *str, t_dt_elem **token, t_check *check, int *j)
 {
-	// printf("Je rentre dans token_redir avec->|%s|\n", str);
 	if (ft_strncmp(str, "<<", 2) == 0)
 		return (token_heredoc(token, check, str, j));
 	else if (ft_strncmp(str, "<", 1) == 0)

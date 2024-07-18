@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:27:38 by glions            #+#    #+#             */
-/*   Updated: 2024/07/17 16:19:15 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 13:52:58 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -172,7 +172,7 @@ int						nb_cmd(t_cmd *cmd);
 int						exec_simple_cmd(t_cmd *cmd, t_minish *dt);
 char					*get_path(t_cmd *cmd, t_minish *dt);
 void					close_cmd(t_cmd *cmd);
-int						init_cmd(t_dt_elem **tokens, t_cmd **new_c);
+int						init_cmd(t_dt_elem *tokens, t_cmd **new_c);
 char					**gen_env(t_list_gl *env);
 
 //// UTILS

@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 03:12:22 by glions            #+#    #+#             */
-/*   Updated: 2024/07/17 15:25:03 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/18 12:08:24 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ static int	remove_redir(t_cmd *cmd)
 	}
 	k = 0;
 	j = i;
-	printf("Valeur de i->%d\n", i);
 	while (--j >= 0)
 		if (cmd->tab_opt[j])
 			k++;
-	printf("Options restantes->%d\n", k);
 	new_opt = malloc((k + 1) * sizeof(char *));
 	if (!new_opt)
 		return (0);
@@ -81,14 +79,14 @@ static int	check_next_token(t_dt_elem **tokens, t_cmd **new_c)
 	return (1);
 }
 
-int	init_cmd(t_dt_elem **tokens, t_cmd **new_c)
+int	init_cmd(t_dt_elem *tokens, t_cmd **new_c)
 {
-	*new_c = create_cmd(tokens);
+	*new_c = create_cmd(&tokens);
 	if (!remove_redir(*new_c))
 		return (0);
 	if (!*new_c)
 		return (0);
-	if (!check_next_token(tokens, new_c))
+	if (!check_next_token(&tokens, new_c))
 		return (free_cmd(*new_c), 0);
 	return (1);
 }
