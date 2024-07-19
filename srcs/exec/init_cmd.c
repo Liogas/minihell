@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 03:12:22 by glions            #+#    #+#             */
-/*   Updated: 2024/07/18 12:08:24 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/19 15:13:06 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ static void	add_list_cmd(t_cmd *list, t_cmd *cmd)
 	tmp->next = cmd;
 }
 
-static int	check_next_token(t_dt_elem **tokens, t_cmd **new_c)
+static int	check_next_token(t_dt_elem **tokens, t_cmd **new_c, t_minish *dt_minish)
 {
 	t_cmd	*cmd;
 
 	while (*tokens && (*tokens)->type == PIPE_LINE)
 	{
 		*tokens = (*tokens)->next;
-		cmd = create_cmd(tokens);
+		cmd = create_cmd(tokens, dt_minish);
 		if (!cmd)
 			return (0);
 		remove_redir(cmd);
@@ -79,14 +79,14 @@ static int	check_next_token(t_dt_elem **tokens, t_cmd **new_c)
 	return (1);
 }
 
-int	init_cmd(t_dt_elem *tokens, t_cmd **new_c)
+int	init_cmd(t_dt_elem *tokens, t_cmd **new_c, t_minish *dt_minish)
 {
-	*new_c = create_cmd(&tokens);
-	if (!remove_redir(*new_c))
-		return (0);
+	*new_c = create_cmd(&tokens, dt_minish);
 	if (!*new_c)
 		return (0);
-	if (!check_next_token(&tokens, new_c))
+	if (!remove_redir(*new_c))
+		return (0);
+	if (!check_next_token(&tokens, new_c, dt_minish))
 		return (free_cmd(*new_c), 0);
 	return (1);
 }

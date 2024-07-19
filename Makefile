@@ -46,7 +46,7 @@ ECHO_SRC    = ft_echo.c
 
 PARSING_SRC	= parsing.c parsing_syntax.c parsing_operator.c parsing_element.c parsing_quote.c parsing_last_verif.c
 
-PARSING_TOKEN_SRC	= tokens_quote.c tokens_dollar.c tokens_redir.c tokens_other.c
+PARSING_TOKEN_SRC	= tokens_quote.c tokens_redir.c tokens_other.c
 
 #================OBJ================
 

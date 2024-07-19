@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:27:38 by glions            #+#    #+#             */
-/*   Updated: 2024/07/18 13:52:58 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/19 11:45:48 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,6 @@ int						new_cmd(char *str, t_check *check, int *i,
 // TOKENS
 int						token_quotes(char *str, t_dt_elem **token,
 							t_check *check, char c);
-int						tokens_dollar(char *str, t_dt_elem **token,
-							t_check *check, int *j);
 int						tokens_redir(char *str, t_dt_elem **token,
 							t_check *check, int *j);
 int						token_whitespace(char *str, t_dt_elem **token,
@@ -172,7 +170,7 @@ int						nb_cmd(t_cmd *cmd);
 int						exec_simple_cmd(t_cmd *cmd, t_minish *dt);
 char					*get_path(t_cmd *cmd, t_minish *dt);
 void					close_cmd(t_cmd *cmd);
-int						init_cmd(t_dt_elem *tokens, t_cmd **new_c);
+int						init_cmd(t_dt_elem *tokens, t_cmd **new_c, t_minish *dt_minish);
 char					**gen_env(t_list_gl *env);
 
 //// UTILS
@@ -181,7 +179,7 @@ t_check					*create_check(void);
 t_minish				*create_minish(char **envp);
 t_dt_elem				*create_dt_elem(char *value, enum e_type type,
 							enum e_state state);
-t_cmd					*create_cmd(t_dt_elem **start);
+t_cmd					*create_cmd(t_dt_elem **start, t_minish *dt_minish);
 
 // DUP
 t_node_env				*dup_node_env(t_node_env *dt);
@@ -210,6 +208,6 @@ int						type_is_quote(enum e_type type);
 int						type_accept_for_quote(enum e_type type);
 
 // DOLLAR
-int						var_dollar(char *str, int *i, char **res_env);
+void						var_dollar(char *str, char **res_env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 08:57:41 by glions            #+#    #+#             */
-/*   Updated: 2024/05/15 13:55:50 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/19 11:55:05 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	*ft_strjoin_w_free(char *s1, char const *s2)
 	int		i;
 	int		j;
 
+	if (!s1)
+		return ((char *)s2);
 	if (!s2)
 		return (free(s1), NULL);
-	if (!s1)
-		return (NULL);
 	new_s = (char *)malloc((ft_strlen((char *)s1)
 				+ ft_strlen((char *)s2) + 1) * sizeof(char));
 	if (!new_s)
