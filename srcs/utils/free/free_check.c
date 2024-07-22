@@ -25,6 +25,7 @@ void	free_doublechar(char **tab)
 	}
 }
 
+
 void	free_check(t_check	*dt)
 {
 	if (dt)
@@ -37,6 +38,8 @@ void	free_check(t_check	*dt)
 			free(dt->oprt);
 		if (dt->line_cmd)
 			free(dt->line_cmd);
+		if (dt->bltn)
+			free(dt->bltn);
 		free(dt);
 	}
 }

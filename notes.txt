@@ -1,0 +1,2 @@
+add flag_env dans t_minish
+enlever point afficher env

@@ -26,6 +26,7 @@ int child_process1(t_cmd *cmd, t_minish *dt)
 	if (n_redir[1] == 0)
 		if (dup2(cmd->tab_pipes[cmd->id][1], STDOUT_FILENO) == -1)
 			return (perror("dup2"), 0);
+	printf("get path\n");
 	if (!cmd->tab_opt[0])
 		(close_tab_pipes(cmd), free_cmd(cmd), free_minish(dt),
 			exit(EXIT_SUCCESS));

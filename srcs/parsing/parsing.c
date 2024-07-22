@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:19:36 by glions            #+#    #+#             */
-/*   Updated: 2024/07/16 16:11:00 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/22 13:20:58 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	reset_syntax(t_check *check)
 	check->nb_single = 0;
 }
 
-static int	blockenisation2(int *i, t_dt_elem **tokens, t_minish *dt,
+static int	blockenisation2(int *i, t_dt_elem **curr_block, t_minish *dt,
 		char *str)
 {
 	char	c;
@@ -26,7 +26,7 @@ static int	blockenisation2(int *i, t_dt_elem **tokens, t_minish *dt,
 	c = str[*i];
 	if (accept_char(c) == 1)
 	{
-		if (new_cmd(str + *i, dt->check, i, tokens) == 0)
+		if (new_cmd(str + *i, dt, i, curr_block) == 0)
 			return (printf("ERROR 3\n"), 0);
 	}
 	else
@@ -34,7 +34,7 @@ static int	blockenisation2(int *i, t_dt_elem **tokens, t_minish *dt,
 	return (1);
 }
 
-int	blockenisation(t_dt_elem **tokens, char *str, t_minish *dt)
+int	blockenisation(t_dt_elem **curr_block, char *str, t_minish *dt)
 {
 	int		i;
 	char	c;
@@ -44,16 +44,16 @@ int	blockenisation(t_dt_elem **tokens, char *str, t_minish *dt)
 	while (str[i])
 	{
 		c = str[i];
-		e = check_operator(str + i, dt->check, tokens);
+		e = check_operator(str + i, dt->check, curr_block);
 		if (e == 0)
 			return (0);
 		else if (e == -1 && is_white(c) == 1)
 		{
-			if (add_back_elem(tokens, create_dt_elem(ft_strndup(str + i, 1),
+			if (add_back_elem(curr_block, create_dt_elem(ft_strndup(str + i, 1),
 						WHITE_SPACE, GENERAL)) == 0)
 				return (0);
 		}
-		else if (e == -1 && blockenisation2(&i, tokens, dt, str) == 0)
+		else if (e == -1 && blockenisation2(&i, curr_block, dt, str) == 0)
 			return (0);
 		i++;
 	}
@@ -71,6 +71,5 @@ int	parsing(t_minish *dt)
 		return (0);
 	if (parsing_last_verif(&dt->block_token) == 0)
 		return (0);
-	print_dt_elem(dt->block_token);
 	return (1);
 }

@@ -28,7 +28,7 @@ SRC         = main.c
 
 BUILT_SRC   = ft_cd.c ft_env.c ft_export.c ft_pwd.c ft_unset.c
 
-EXEC_SRC	= 	start_exec.c init_cmd.c clean_all.c cmd_utils.c exec_all_cmd.c exec_cmd.c exec_one_cmd.c exec_utils.c heredoc_utils.c gen_env.c
+EXEC_SRC	= 	start_exec.c init_cmd.c clean_all.c cmd_utils.c exec_all_cmd.c exec_cmd.c exec_one_cmd.c exec_utils.c heredoc_utils.c gen_env.c parent_task.c exec_cd.c get_path.c exec_other_bltn.c
 
 UTILS_FREE_SRC   = free_node_env.c free_minish.c free_check.c free_dt_elem.c free_cmd.c
 
@@ -42,11 +42,11 @@ UTILS_CREATE_SRC = create_check.c create_minish.c create_dt_elem.c create_cmd.c
 
 UTILS_SYNTAX_SRC = syntax.c type.c
 
-ECHO_SRC    = ft_echo.c
-
 PARSING_SRC	= parsing.c parsing_syntax.c parsing_operator.c parsing_element.c parsing_quote.c parsing_last_verif.c
 
 PARSING_TOKEN_SRC	= tokens_quote.c tokens_redir.c tokens_other.c
+
+ECHO = $(BUILT_DIR)ft_echo
 
 #================OBJ================
 
@@ -146,6 +146,9 @@ $(OBJ_DIR)%.o: $(PARSING_TOKEN_DIR)%.c
 
 ${NAME}: $(LIBFT) $(OBJ_DIR_SRC) $(OBJ_DIR_BUILD) $(OBJ_DIR_ECHO) $(OBJ_DIR_EXEC) $(OBJ_DIR_PARSING) $(OBJ_DIR_PARSING_TOKEN) $(OBJ_DIR_UTILS_SYNTAX) $(OBJ_DIR_UTILS_DUP) $(OBJ_DIR_UTILS_DOLLAR) $(OBJ_DIR_UTILS_FREE) $(OBJ_DIR_UTILS_PRINT) $(OBJ_DIR_UTILS_CREATE)
 	$(CC) $(CFLAGS) $(OBJ_DIR_SRC) $(OBJ_DIR_BUILD) $(OBJ_DIR_EXEC) $(OBJ_DIR_ECHO) $(OBJ_DIR_PARSING) $(OBJ_DIR_UTILS_SYNTAX) $(OBJ_DIR_PARSING_TOKEN) $(OBJ_DIR_UTILS_DUP) $(OBJ_DIR_UTILS_DOLLAR) $(OBJ_DIR_UTILS_FREE) $(OBJ_DIR_UTILS_PRINT) $(OBJ_DIR_UTILS_CREATE) $(LIBFT) -o $@ $(INC) -lreadline
+
+$(ECHO) : $(LIBFT)
+	$(CC) $(CFLAGS) -o $(ECHO) $(BUILT_DIR)ft_echo.c $(LIBFT) $(INC) 
 
 $(LIBFT):
 	@make -C libft

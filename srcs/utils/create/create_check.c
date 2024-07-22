@@ -44,23 +44,23 @@ static char	**init_paths(void)
 	return (tab);
 }
 
-// static char	**init_builtins(void)
-// {
-// 	char	**tab;
+static char	**init_builtins(void)
+{
+	char	**tab;
 
-// 	tab = malloc(8 * sizeof(char *));
-// 	if (!tab)
-// 		return (NULL);
-// 	tab[0] = "echo";
-// 	tab[1] = "cd";
-// 	tab[2] = "pwd";
-// 	tab[3] = "export";
-// 	tab[4] = "unset";
-// 	tab[5] = "env";
-// 	tab[6] = "exit";
-// 	tab[7] = NULL;
-// 	return (tab);
-// }
+	tab = malloc(8 * sizeof(char *));
+	if (!tab)
+		return (NULL);
+	tab[0] = "echo";
+	tab[1] = "cd";
+	tab[2] = "pwd";
+	tab[3] = "export";
+	tab[4] = "unset";
+	tab[5] = "env";
+	tab[6] = "exit";
+	tab[7] = NULL;
+	return (tab);
+}
 
 t_check	*create_check(void)
 {
@@ -74,6 +74,9 @@ t_check	*create_check(void)
 	new->paths = NULL;
 	new->redirct = NULL;
 	if (!init_oprt_redirct(&new->oprt, &new->redirct))
+		return (free_check(new), NULL);
+	new->bltn = init_builtins();
+	if (!new->bltn)
 		return (free_check(new), NULL);
 	new->paths = init_paths();
 	if (!new->paths)

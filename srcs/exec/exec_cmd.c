@@ -22,6 +22,7 @@ int which_process(t_cmd *curr_cmd, t_minish *dt)
 		return (child_process2(curr_cmd, dt));
 }
 
+
 int exec_line(t_cmd *cmd, t_minish *dt)
 {
 	int		i;

@@ -21,7 +21,7 @@ void	print_env(t_list_gl	*env)
 	while (tmp)
 	{
 		tmp2 = tmp->content;
-		printf("%s:%s\n", tmp2->name, tmp2->value);
+		printf("%s=%s\n", tmp2->name, tmp2->value);
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:27:38 by glions            #+#    #+#             */
-/*   Updated: 2024/07/19 11:45:48 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/22 17:32:10 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <signal.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -114,6 +114,7 @@ typedef struct s_minish
 	t_dt_elem			*block_token;
 	t_check				*check;
 	int					status;
+	int					flag_env;
 }						t_minish;
 
 int						get_heredoc(t_redir *curr, int i);
@@ -139,7 +140,7 @@ int						check_operator(char *str, t_check *check,
 							t_dt_elem **curr_block);
 
 // parsing_element
-int						new_cmd(char *str, t_check *check, int *i,
+int						new_cmd(char *str, t_minish *dt_minish, int *i,
 							t_dt_elem **curr_block);
 
 // TOKENS
@@ -149,8 +150,10 @@ int						tokens_redir(char *str, t_dt_elem **token,
 							t_check *check, int *j);
 int						token_whitespace(char *str, t_dt_elem **token,
 							t_check *check, int j);
-int						token_word(char *str, t_dt_elem **token, t_check *check,
+int						token_word(char *str, t_dt_elem **token, t_minish *dt_minish,
 							int *j);
+int						tokens_dollar(char *str, t_dt_elem **token,
+							t_minish *dt_minish, int *j);
 
 //// EXEC
 int						start_exec(t_minish *dt_minish);
@@ -170,7 +173,8 @@ int						nb_cmd(t_cmd *cmd);
 int						exec_simple_cmd(t_cmd *cmd, t_minish *dt);
 char					*get_path(t_cmd *cmd, t_minish *dt);
 void					close_cmd(t_cmd *cmd);
-int						init_cmd(t_dt_elem *tokens, t_cmd **new_c, t_minish *dt_minish);
+int						init_cmd(t_dt_elem *tokens, t_cmd **new_c,
+							t_minish *dt_minish);
 char					**gen_env(t_list_gl *env);
 
 //// UTILS
@@ -200,6 +204,7 @@ void					print_dt_elem(t_dt_elem *elem);
 void					print_cmd(t_cmd *cmd, int mode);
 
 // SYNTAX
+int	is_redir(char *str);
 int						is_white(char c);
 int						accept_char(char c);
 int						type_is_redir(enum e_type type);
@@ -208,6 +213,13 @@ int						type_is_quote(enum e_type type);
 int						type_accept_for_quote(enum e_type type);
 
 // DOLLAR
-void						var_dollar(char *str, char **res_env);
+char					*ft_getenv(char *name, t_list_gl *env);
+
+int						modif_env(t_cmd *cmd);
+int						change_dir(t_cmd *cmd, t_minish *dt, int pos,
+							int change);
+int						parent_task(t_minish *dt);
+void					ft_pwd(void);
+int						other_built(t_cmd *curr, t_minish *dt);
 
 #endif

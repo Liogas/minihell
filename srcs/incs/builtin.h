@@ -26,6 +26,7 @@ typedef struct s_echo
 }			t_echo;
 
 // FT_ECHO
+int	ft_cd(const char *path);
 int			ft_unset(t_list_gl **list, char *name);
 void		ft_env(t_list_gl *list);
 int			ft_export(char *str, t_list_gl **list);

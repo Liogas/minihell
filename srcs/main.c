@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 11:12:23 by glions            #+#    #+#             */
-/*   Updated: 2024/07/18 15:42:26 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/22 18:41:51 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	start_minish(t_minish *dt)
 	return (0);
 }
 
-// SIGABRT CTRL-\
+// SIGABRT CTRL-
 // SIGINT CTRL-C
 
 int	main(int ac, char **av, char **envp)

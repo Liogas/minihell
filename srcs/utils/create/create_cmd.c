@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:51:47 by glions            #+#    #+#             */
-/*   Updated: 2024/07/19 15:56:58 by glions           ###   ########.fr       */
+/*   Updated: 2024/07/22 12:47:00 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ static int	add_redir(t_cmd **cmd, t_dt_elem **redir, t_dt_elem *file)
 	return (1);
 }
 
-static char	*ft_getenv(char *name, t_list_gl *env)
-{
-	while (env)
-	{
-		if (!ft_strcmp(name, ((t_node_env *)env->content)->name))
-			return (ft_strdup(((t_node_env *)env->content)->value));
-		env = env->next;
-	}
-	return (ft_strdup(""));
-}
+// static char	*ft_getenv(char *name, t_list_gl *env)
+// {
+// 	while (env)
+// 	{
+// 		if (!ft_strcmp(name, ((t_node_env *)env->content)->name))
+// 			return (ft_strdup(((t_node_env *)env->content)->value));
+// 		env = env->next;
+// 	}
+// 	return (ft_strdup(""));
+// }
 
 static int	add_dollar(char **value, int *i, t_dt_elem *token,
 		t_minish *dt_minish)
@@ -91,8 +91,6 @@ static int	add_normal(char **value, int *i, t_dt_elem *token)
 	int		j;
 	char	*tmp;
 
-	printf("value->%s\n", *value);
-	printf("i->%d\n", *i);
 	j = 0;
 	while (token->value[*i + j] && (token->state == IN_QUOTE || (token->value[*i + j] != '$' || !(token->value[*i + j + 1] && (isalpha(token->value[*i + j + 1]) || token->value[*i + j + 1] == '?')))))
 		j++;

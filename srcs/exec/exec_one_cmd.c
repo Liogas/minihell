@@ -56,28 +56,6 @@ int	get_all_redir(int **fd, t_redir *redir, int i)
 	return (1);
 }
 
-char	*get_path(t_cmd *cmd, t_minish *dt)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (dt->check->paths && dt->check->paths[i])
-	{
-		tmp = ft_strjoin(dt->check->paths[i], "/");
-		if (!tmp)
-			return (NULL);
-		tmp = ft_strjoin_w_free(tmp, cmd->tab_opt[0]);
-		if (!tmp)
-			return (NULL);
-		if (access(tmp, F_OK | X_OK) == 0)
-			return (tmp);
-		free(tmp);
-		i++;
-	}
-	return (NULL);
-}
-
 void	free_fd(t_cmd *curr_cmd)
 {
 	int	i;
@@ -125,21 +103,54 @@ int	one_child(t_cmd *cmd, t_minish *dt)
 	return (1);
 }
 
+int	modif_env(t_cmd *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd->tab_opt && cmd->tab_opt[i])
+	{
+		if ((ft_strcmp(cmd->tab_opt[i], "export") == 0) || (ft_strcmp(cmd->tab_opt[i], "unset") == 0))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	exec_simple_cmd(t_cmd *cmd, t_minish *dt)
 {
 	int	heredoc;
+	int		i;
 
 	heredoc = check_if_heredoc(cmd);
 	if (heredoc != 0)
 		if (!exec_heredoc(cmd))
 			return (0);
+	i = 0;
+	while (cmd->tab_opt && cmd->tab_opt[i])
+	{
+		if (ft_strcmp(cmd->tab_opt[i], "cd") == 0)
+		{
+			if (!change_dir(cmd, dt, i, 1))
+				return (0);
+			return (1);
+		}
+		i++;
+	}
+	dt->flag_env = modif_env(cmd);
 	cmd->pid = fork();
 	if (cmd->pid == -1)
-		return (perror("dede fork"), 0);
+		return (perror("fork"), 0);
 	else if (cmd->pid == 0)
 	{
 		one_child(cmd, dt);
 		(free_cmd(cmd), free_minish(dt), exit(EXIT_FAILURE));
+	}
+	else
+	{
+		waitpid(cmd->pid, NULL, 0); //LAISSER ICI SINON NE MARCHE PAS!!!!
+		if (!parent_task(dt))
+			return (0);
 	}
 	return (1);
 }

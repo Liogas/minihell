@@ -29,6 +29,7 @@ t_minish	*create_minish(char **envp)
 		return (free(new), NULL);
 	new->check = create_check();
 	new->status = 0;
+	new->flag_env = 0;
 	if (!new->check)
 		return (free(new), NULL);
 	return (new);
